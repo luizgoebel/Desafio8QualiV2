@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Desafio8QualiV2.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Desafio8QualiV2.Data
 {
     public class WebContext : DbContext
     {
-        //public DbSet<Conta> Contas { get; set; }
-        //public DbSet<Despesa> Despesas { get; set; }
-        //public DbSet<Receita> Receitas { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        //public DbSet<Email> Emails { get; set; }
 
         public WebContext(DbContextOptions<WebContext> options) : base(options)
         {
