@@ -43,10 +43,8 @@ namespace Desafio8QualiV2.Pages.Usuarios
                 {
                     return Redirect("../Error");
                 }
-
-                Usuario.Created = DateTime.Now;
-                Usuario.Changed = DateTime.Now;
-
+                Usuario.Create = DateTime.Now;
+                Usuario.Change = DateTime.Now;
                 await _context.AddAsync(Usuario);
                 await _context.SaveChangesAsync();
 
@@ -73,15 +71,12 @@ namespace Desafio8QualiV2.Pages.Usuarios
         {
             if (ModelState.IsValid)
             {
-                _context.Attach(Usuario).State = EntityState.Modified;
+                Usuario.Change = DateTime.Now;
+                _context.Usuarios.Update(Usuario);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Usuarios/Index");
             }
 
-            if (!UsuarioExiste(Usuario.Id))
-            {
-                return NotFound();
-            }
             return Page();
         }
 

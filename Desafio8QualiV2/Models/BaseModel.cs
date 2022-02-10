@@ -7,14 +7,7 @@ namespace Desafio8QualiV2.Models
     public class BaseModel
     {
         public int Id { get; set; }
-        public DateTime? Created { get; set; }
-        public DateTime? Changed { get; set; }
-
-        public BaseModel()
-        {
-            if (!Created.HasValue)
-                Created = DateTime.Now;
-            Changed = DateTime.Now;
-        }
+        public DateTime Create { get; set; }
+        public DateTime Change { get; set; }
     }
 }

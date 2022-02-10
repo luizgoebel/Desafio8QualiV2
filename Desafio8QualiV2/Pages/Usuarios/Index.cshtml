@@ -147,8 +147,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" asp-page-handler="Cadastrar" id="frmEdit">
+                <form method="post" asp-page-handler="Editar" id="frmEdit">
                     <input asp-for="Usuario.Id" id="idEdit" class="form-control" readonly hidden>
+                    <input type="datetime" asp-for="Usuario.Create" id="createEdit" class="form-control" readonly hidden>
+                    <input type="datetime" asp-for="Usuario.Change" id="changeEdit" class="form-control" readonly hidden>
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label asp-for="Usuario.Nome"></label>
@@ -176,6 +178,59 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="this.disabled = true; frmEdit.submit();" class="btn btn-primary">Salvar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*visualizar*@
+<div class="modal animated fadeInUp custo-fadeInUp show" id="Visualizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Visualizar usuário</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Visualizar" id="frmVisualizar">
+                    <input asp-for="Usuario.Id" id="idVI" class="form-control" readonly hidden>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Usuario.Nome"></label>
+                            <input asp-for="Usuario.Nome" id="nomeVI" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Usuario.Empresa"></label>
+                            <input asp-for="Usuario.Empresa" id="empresaVI" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Usuario.Email"></label>
+                            <input type="email" asp-for="Usuario.Email" id="emailVI" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Telefone Pessoal</label>
+                            <input asp-for="Usuario.TelefonePessoal" id="telPVI" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Telefone Comercial</label>
+                            <input asp-for="Usuario.TelefoneComercial" id="telCVI" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Criado em</label>
+                            <input type="datetime" asp-for="Usuario.Create" id="createVI" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Alterado em</label>
+                            <input type="datetime" asp-for="Usuario.Change" id="changeVI" class="form-control" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
                 <button class="btn btn-danger" data-dismiss="modal">Fechar</button>
             </div>
         </div>
@@ -219,15 +274,22 @@
         $('#emailEdit').val(item.Email);
         $('#telPEdit').val(item.TelefonePessoal);
         $('#telCEdit').val(item.TelefoneComercial);
+        $('#createEdit').val(item.Create);
+        $('#changeEdit').val(item.Change);
     };
 
     function Visualizar(item) {
-        $('#Editar').modal('show');
+        $('#Visualizar').modal('show');
 
-        $('#idEdit').val(item.ID);
-        $('#saldoEdit').val(item.Saldo);
-        $('#tipoContaEdit').val(item.TipoConta);
-        $('#instituicaoFinanceiraEdit').val(item.InstituicaoFinanceira);
+        $('#idVI').val(item.Id);
+        $('#nomeVI').val(item.Nome);
+        $('#empresaVI').val(item.Empresa);
+        $('#emailVI').val(item.Email);
+        $('#telPVI').val(item.TelefonePessoal);
+        $('#telCVI').val(item.TelefoneComercial);
+        $('#createVI').val(item.Create);
+        $('#changeVI').val(item.Change);
+        //$('#createVI').val(item.Create.ToString("dd/mm/ yyyy"));
     }
 
     function myFunction() {

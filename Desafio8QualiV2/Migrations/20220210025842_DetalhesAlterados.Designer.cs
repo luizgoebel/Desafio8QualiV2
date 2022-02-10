@@ -4,14 +4,16 @@ using Desafio8QualiV2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Desafio8QualiV2.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20220210025842_DetalhesAlterados")]
+    partial class DetalhesAlterados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +31,7 @@ namespace Desafio8QualiV2.Migrations
                     b.Property<DateTime?>("Change")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Create")
+                    b.Property<DateTime?>("Create")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
