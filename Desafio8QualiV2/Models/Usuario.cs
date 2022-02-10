@@ -14,5 +14,7 @@ namespace Desafio8QualiV2.Models
         public string? Email { get; set; }
         public string? TelefonePessoal { get; set; }
         public string? TelefoneComercial { get; set; }
+
+
     }
 }
