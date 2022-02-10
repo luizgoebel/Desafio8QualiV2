@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Desafio8QualiV2.Data;
 using Desafio8QualiV2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Desafio8QualiV2.Pages.Usuarios
 {
@@ -30,7 +30,6 @@ namespace Desafio8QualiV2.Pages.Usuarios
         public async Task<IActionResult> OnGetAsync()
         {
             await Carregamento();
-
             return Page();
         }
 
@@ -39,31 +38,41 @@ namespace Desafio8QualiV2.Pages.Usuarios
             await Carregamento();
             if (ModelState.IsValid)
             {
-                if (UsuarioExiste(Usuario.Id))
+                try
                 {
-                    return Redirect("../Error");
+                    Usuario.Create = DateTime.Now;
+                    Usuario.Change = DateTime.Now;
+                    await _context.AddAsync(Usuario);
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("../Usuarios/Index");
                 }
-                Usuario.Create = DateTime.Now;
-                Usuario.Change = DateTime.Now;
-                await _context.AddAsync(Usuario);
-                await _context.SaveChangesAsync();
-
-                return RedirectToPage("../Usuarios/Index");
+                catch (Exception)
+                {
+                    if (!UsuarioExiste(Usuario.Id))
+                    {
+                        return NotFound();
+                    }
+                }
             }
-
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeletarAsync()
         {
             Usuario usuario = await _context.Usuarios.FirstOrDefaultAsync(c => c.Id == IdUsuario);
-            if (usuario != null)
+            try
             {
-                _context.Remove(usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("../Usuarios/Index");
+                if (UsuarioExiste(usuario.Id))
+                {
+                    _context.Remove(usuario);
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("../Usuarios/Index");
+                }
             }
-
+            catch (Exception)
+            {
+                return NotFound();
+            }
             return Page();
         }
 
@@ -71,10 +80,17 @@ namespace Desafio8QualiV2.Pages.Usuarios
         {
             if (ModelState.IsValid)
             {
-                Usuario.Change = DateTime.Now;
-                _context.Usuarios.Update(Usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("../Usuarios/Index");
+                try
+                {
+                    Usuario.Change = DateTime.Now;
+                    _context.Usuarios.Update(Usuario);
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("../Usuarios/Index");
+                }
+                catch (Exception)
+                {
+                    return NotFound();
+                }
             }
 
             return Page();
